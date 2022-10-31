@@ -23,8 +23,7 @@ public class WordsFilter implements Listener {
         String message = e.getMessage();
         Config config = this.main.getConfig();
 
-        boolean sendWarning = false;
-        boolean bypassPerm = p.hasPermission(config.getString("chatfilter.bypass-permission"));
+        boolean bypassPerm = p.hasPermission("chatfilter.bypass");
 
         char star = config.getString("replace-symbol").charAt(0);
         Iterator<String> stuff = config.getStringList("muted-words").iterator();
@@ -32,14 +31,12 @@ public class WordsFilter implements Listener {
             String str = stuff.next();
             if (message.toLowerCase().contains(str.toLowerCase()) && !bypassPerm) {
                 message = message.replace(str, new String(new char[str.length()]).replace('\0', star));
-                if (!sendWarning) {
-                    sendWarning = true;
-                }
             }
         }
 
-        if (sendWarning)
-            p.sendMessage(config.getString("chatFilter.warning-message").replace("&", "§"));
+        if (config.getBoolean("chatfilter.enable-warning-message")) {
+            p.sendMessage(config.getString("chatfilter.warning-message").replace("&", "§"));
+        }
         e.setMessage(message);
 
     }

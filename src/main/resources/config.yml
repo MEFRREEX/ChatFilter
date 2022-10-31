@@ -1,6 +1,9 @@
+# Use '§' or '&' to change the color of the message.
+
 chatfilter:
-  bypass-permission: 'chatfilter.bypass'
-  warning-message: '&d&lYOUR SERVER HERE &8» &bWe''ve noticed you''re using &6Profane Language &ba lot. Please keep it to a minimum.'
+  # Chat filter bypass permission: chatfilter.bypass
+  warning-message: '§c§lThere is a forbidden word in your message. §r§7You can get a mute for excessive matting!'
+  enable-warning-message: false
 
 
 #Example: Hello will be replaced with ****
@@ -8,7 +11,6 @@ replace-symbol: '*'
 
 
 # You can continue this list as long as you want just copy my examples above
-# NOTE: I do find these words HIGHLY OFFENSIVE and Recommend you keep them
 muted-words:
 - 'nigger'
 - 'beaner'

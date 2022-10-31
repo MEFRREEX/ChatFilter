@@ -3,3 +3,5 @@ name: ChatFilter
 author: Driftay
 version: 2.0-SNAPSHOT
 description: The Best Plugin For Managing Offensive Words
+
+api: ["1.0.8"]
