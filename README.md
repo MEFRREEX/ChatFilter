@@ -22,3 +22,14 @@ muted-words:
 - 'word 3'
 
 ```
+
+
+```
+Without filter:
+```
+![no filter](https://user-images.githubusercontent.com/83061703/199034153-65ce8e26-ba24-4a43-8124-0a37d4a8f968.png)
+
+```
+With filter:
+```
+![filter](https://user-images.githubusercontent.com/83061703/199034166-44bd8bcd-105e-4ebc-8bd2-f3917968bfce.png)
