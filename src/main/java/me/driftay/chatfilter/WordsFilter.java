@@ -1,11 +1,10 @@
 package me.driftay.chatfilter;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import cn.nukkit.utils.Config;
+import cn.nukkit.Player;
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.Listener;
+import cn.nukkit.event.player.PlayerChatEvent;
 
 import java.util.Iterator;
 
@@ -18,17 +17,17 @@ public class WordsFilter implements Listener {
 
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
+    public void onChat(PlayerChatEvent e) {
 
         Player p = e.getPlayer();
         String message = e.getMessage();
-        FileConfiguration config = this.main.getConfig();
+        Config config = this.main.getConfig();
 
         boolean sendWarning = false;
-        boolean bypassPerm = p.hasPermission(config.getString("ChatFilter.bypass-permission"));
+        boolean bypassPerm = p.hasPermission(config.getString("chatfilter.bypass-permission"));
 
-        char star = config.getString("Replace-Symbol").charAt(0);
-        Iterator<String> stuff = config.getStringList("Muted-Words").iterator();
+        char star = config.getString("replace-symbol").charAt(0);
+        Iterator<String> stuff = config.getStringList("muted-words").iterator();
         while (stuff.hasNext()) {
             String str = stuff.next();
             if (message.toLowerCase().contains(str.toLowerCase()) && !bypassPerm) {
@@ -40,7 +39,7 @@ public class WordsFilter implements Listener {
         }
 
         if (sendWarning)
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("ChatFilter.Warning-Message")));
+            p.sendMessage(config.getString("chatFilter.warning-message").replace("&", "§"));
         e.setMessage(message);
 
     }

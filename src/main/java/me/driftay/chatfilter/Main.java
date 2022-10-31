@@ -1,18 +1,15 @@
 package me.driftay.chatfilter;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
+import cn.nukkit.event.Listener;
+import cn.nukkit.plugin.PluginBase;
 
-public class Main extends JavaPlugin {
-    ConsoleCommandSender Console = Bukkit.getConsoleSender();
+public class Main extends PluginBase {
 
     public void onEnable() {
-        this.Console.sendMessage("ChatFilter Enabled");
-        this.Console.sendMessage("Author: Driftay");
-        this.getConfig().options().copyDefaults(true);
+        this.getLogger().info("ChatFilter Enabled");
+        this.getLogger().info("Author: Driftay");
         this.saveDefaultConfig();
-        this.getServer().getPluginManager().registerEvents(new WordsFilter(this), this);
-        this.getCommand("chatfilter").setExecutor(new ReloadCMD(this));
+        
+        this.getServer().getPluginManager().registerEvents((Listener) new WordsFilter(this), this);
     }
 }
