@@ -9,6 +9,7 @@ import cn.nukkit.event.player.PlayerChatEvent;
 import java.util.Iterator;
 
 public class WordsFilter implements Listener {
+
     private Main main;
 
     public WordsFilter(Main main) {
@@ -25,7 +26,7 @@ public class WordsFilter implements Listener {
 
         boolean bypassPerm = p.hasPermission("chatfilter.bypass");
 
-        char star = config.getString("replace-symbol").charAt(0);
+        char star = config.getString("chatfilter.replace-symbol").charAt(0);
         Iterator<String> stuff = config.getStringList("muted-words").iterator();
         while (stuff.hasNext()) {
             String str = stuff.next();
@@ -34,10 +35,24 @@ public class WordsFilter implements Listener {
             }
         }
 
-        if (config.getBoolean("chatfilter.enable-warning-message")) {
-            p.sendMessage(config.getString("chatfilter.warning-message").replace("&", "§"));
+        if (config.getString("chatfilter.filter-type").equals("replace")) {
+            e.setMessage(message);
+            if (config.getBoolean("messages.enable-warning-message")) {
+                p.sendMessage(config.getString("messages.warning-message").replace("&", "§"));
+            }
         }
-        e.setMessage(message);
-
+        else if (config.getString("chatfilter.filter-type").equals("block")) {
+            if (!e.getMessage().equals(message) && !bypassPerm) {
+                e.setCancelled();
+                if (config.getBoolean("messages.enable-block-message")) {
+                    p.sendMessage(config.getString("messages.block-message").replace("&", "§"));
+                }
+            }
+        } else {
+            p.sendMessage("§cConfigure error! Chech console.");
+            main.getServer().getLogger().error("§cConfigure error! Unknown parameter in chatfilter.filter-type: \"" + 
+                config.getString("chatfilter.filter-type"));
+            main.getServer().getLogger().error("Use the available options: \"replace\" or \"block\".");
+        }
     }
 }
