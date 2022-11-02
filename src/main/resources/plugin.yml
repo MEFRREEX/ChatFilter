@@ -4,4 +4,4 @@ author: Driftay
 version: ${project.version}
 description: The Best Plugin For Managing Offensive Words
 
-api: ["1.0.8"]
+api: ["1.0.0"]
