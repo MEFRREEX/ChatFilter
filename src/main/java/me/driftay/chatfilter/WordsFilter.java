@@ -18,38 +18,38 @@ public class WordsFilter implements Listener {
 
 
     @EventHandler
-    public void onChat(PlayerChatEvent e) {
+    public void onChat(PlayerChatEvent event) {
 
-        Player p = e.getPlayer();
-        String message = e.getMessage();
-        Config config = this.main.getConfig();
+        Player player = event.getPlayer();
+        String message = event.getMessage();
+        Config config = main.getConfig();
 
-        boolean bypassPerm = p.hasPermission("chatfilter.bypass");
+        boolean bypassPerm = player.hasPermission("chatfilter.bypass");
 
         char star = config.getString("chatfilter.replace-symbol").charAt(0);
         Iterator<String> stuff = config.getStringList("muted-words").iterator();
         while (stuff.hasNext()) {
             String str = stuff.next();
             if (message.toLowerCase().contains(str.toLowerCase()) && !bypassPerm) {
-                message = message.replace(str, new String(new char[str.length()]).replace('\0', star));
+                message = message.toLowerCase().replace(str, new String(new char[str.length()]).replace('\0', star));
             }
         }
 
         if (config.getString("chatfilter.filter-type").equals("replace")) {
-            e.setMessage(message);
+            event.setMessage(message);
             if (config.getBoolean("messages.enable-warning-message")) {
-                p.sendMessage(config.getString("messages.warning-message").replace("&", "§"));
+                player.sendMessage(config.getString("messages.warning-message").replace("&", "§"));
             }
         }
         else if (config.getString("chatfilter.filter-type").equals("block")) {
-            if (!e.getMessage().equals(message) && !bypassPerm) {
-                e.setCancelled();
+            if (!event.getMessage().equals(message) && !bypassPerm) {
+                event.setCancelled();
                 if (config.getBoolean("messages.enable-block-message")) {
-                    p.sendMessage(config.getString("messages.block-message").replace("&", "§"));
+                    player.sendMessage(config.getString("messages.block-message").replace("&", "§"));
                 }
             }
         } else {
-            p.sendMessage("§cConfigure error! Chech console.");
+            player.sendMessage("§cConfigure error! Chech console.");
             main.getServer().getLogger().error("§cConfigure error! Unknown parameter in chatfilter.filter-type: \"" + 
                 config.getString("chatfilter.filter-type"));
             main.getServer().getLogger().error("Use the available options: \"replace\" or \"block\".");
