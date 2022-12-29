@@ -2,7 +2,7 @@
 Chat filter for your Nukkit server!
 
 Config:
-```
+```yml
 # Use '§' or '&' to change the color of the message.
 
 messages:
