@@ -1,6 +1,0 @@
-name: ChatFilter
-version: 2.2
-api: ["1.0.0"]
-description: The Best Plugin For Managing Offensive Words
-authors: ["Driftay", "MEFRREEX"]
-main: com.mefrreex.chatfilter.Main
