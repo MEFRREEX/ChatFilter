@@ -5,6 +5,8 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
+
 import java.util.Set;
 
 import com.mefrreex.chatfilter.Main;
@@ -38,14 +40,14 @@ public class ChatListener implements Listener {
             case REPLACE:
                 event.setMessage(main.getFilteredMessage(message));
                 if (config.getBoolean("messages.enable-warning-message")) {
-                    player.sendMessage(config.getString("messages.warning-message").replace("&", "§"));
+                    player.sendMessage(TextFormat.colorize(config.getString("messages.warning-message")));
                 }
                 break;
 
             case BLOCK:
                 event.setCancelled();
                 if (config.getBoolean("messages.enable-block-message")) {
-                    player.sendMessage(config.getString("messages.block-message").replace("&", "§"));
+                    player.sendMessage(TextFormat.colorize(config.getString("messages.block-message")));
                 }
                 break;
 
