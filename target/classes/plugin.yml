@@ -1,7 +1,6 @@
-main: me.driftay.chatfilter.Main
 name: ChatFilter
-author: Driftay
-version: 2.1-SNAPSHOT
-description: The Best Plugin For Managing Offensive Words
-
+version: 2.2
 api: ["1.0.0"]
+description: The Best Plugin For Managing Offensive Words
+authors: ["Driftay", "MEFRREEX"]
+main: com.mefrreex.chatfilter.Main
