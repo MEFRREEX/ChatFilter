@@ -1,23 +1,24 @@
 package com.mefrreex.chatfilter;
 
+import cn.nukkit.plugin.PluginBase;
+import com.mefrreex.chatfilter.listener.ChatListener;
+import lombok.Getter;
+
 import java.util.Iterator;
 import java.util.List;
-
-import com.mefrreex.chatfilter.listener.ChatListener;
-
-import cn.nukkit.plugin.PluginBase;
-import lombok.Getter;
 
 @Getter
 public class Main extends PluginBase {
 
     private FilterType filterType;
-
+    
+    @Override
     public void onEnable() {
         this.saveDefaultConfig();
         this.getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         this.filterType = FilterType.valueOf(this.getConfig().getString("chatfilter.filter-type").toUpperCase());
     }
+
 
     public boolean containsWords(String message) {
         List<String> list = this.getConfig().getStringList("muted-words");
@@ -34,18 +35,21 @@ public class Main extends PluginBase {
     }
 
     public String getFilteredMessage(String message) {
-        String filteredMessage = message;
+        String filtered = message;
+        
         char symbol = this.getConfig().getString("chatfilter.replace-symbol").charAt(0);
         Iterator<String> iterator = this.getConfig().getStringList("muted-words").iterator();
+        
         while (iterator.hasNext()) {
             String blockedWord = iterator.next().toLowerCase();
-            if (filteredMessage.toLowerCase().contains(blockedWord)) {
-                filteredMessage = filteredMessage.replaceAll("(?i)" + blockedWord, new String(new char[blockedWord.length()]).replace('\0', symbol));
+            if (filtered.toLowerCase().contains(blockedWord)) {
+                filtered = filtered.replaceAll("(?i)" + blockedWord, new String(new char[blockedWord.length()]).replace('\0', symbol));
             }
         }
-        return filteredMessage;
+
+        return filtered;
     }
-    
+
 
     public enum FilterType {
         REPLACE,

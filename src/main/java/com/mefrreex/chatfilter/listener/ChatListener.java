@@ -13,8 +13,8 @@ import com.mefrreex.chatfilter.Main;
 
 public class ChatListener implements Listener {
 
-    private Main main;
-    private Config config;
+    private final Main main;
+    private final Config config;
 
     public ChatListener(Main main) {
         this.main = main;
@@ -26,9 +26,8 @@ public class ChatListener implements Listener {
 
         Player player = event.getPlayer();
         String message = event.getMessage();
-        String loweredMessage = message.toLowerCase();
 
-        if (!main.containsWords(loweredMessage)) {
+        if (!main.containsWords(message.toLowerCase())) {
             return;
         }
 
@@ -54,6 +53,7 @@ public class ChatListener implements Listener {
             case SILENT:
                 event.setRecipients(Set.of(player));
                 break;
+
             default:
                 break;
         }
